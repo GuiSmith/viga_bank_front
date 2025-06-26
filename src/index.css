@@ -1,0 +1,41 @@
+body {
+  background: linear-gradient(to bottom, #ddd, #fff) !important;
+   min-height: 100vh;
+  /* color: rgba(255, 255, 255, 0.87); */
+  color-scheme: light dark;
+  font-family: 'Sans-serif';
+  padding: 0;
+  margin: 0;
+}
+
+.page-wrapper {
+  margin: 1rem;
+}
+
+.card-img.top {
+  width: 100%;
+  height: 150px;
+  border-radius: 50% !important;
+}
+
+.form .form-control#id {
+  width: 15%;
+}
+
+.form .form-control#id[disabled] {
+  background-color: #aaa;
+}
+
+.form .bi-info-circle {
+  cursor: help
+}
+
+.form .form-check-input, .form .form-check-label {
+  cursor: pointer;
+  user-select: none;
+}
+
+.table tbody tr {
+  cursor: pointer;
+  user-select: none;
+}
