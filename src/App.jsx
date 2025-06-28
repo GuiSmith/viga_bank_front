@@ -27,7 +27,7 @@ function App() {
     if(isLoading) return;
 
     if(!isAuthenticated) navigate('/login');
-  },[]);
+  },[isLoading, isAuthenticated, location.pathname]);
 
   return (
     <>
