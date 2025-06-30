@@ -11,11 +11,6 @@ const BarraDeNavegacao = () => {
     const links = [
         {
             auth: true,
-            to: '/profile',
-            text: 'Perfil',
-        },
-        {
-            auth: true,
             to: '/tokens',
             text: 'Tokens'
         },
@@ -65,7 +60,7 @@ const BarraDeNavegacao = () => {
                     <ul className="navbar-nav ms-auto">
                         {!isAuthenticated ?
                             <>
-                                <BarraDeNavegacaoItem to='/perfil'>
+                                <BarraDeNavegacaoItem to='/cadastro'>
                                     Registrar-se
                                 </BarraDeNavegacaoItem>
                                 <BarraDeNavegacaoItem to="/login" >

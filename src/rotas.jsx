@@ -1,7 +1,7 @@
 // Beneficiários
 import Login from '@paginas/beneficiario/Login.jsx';
 import Logout from '@paginas/beneficiario/Logout';
-import Perfil from '@paginas/beneficiario/Perfil';
+import Cadastro from '@paginas/beneficiario/Cadastro';
 
 // Cobranças
 import Cobrancas from '@paginas/Cobrancas';
@@ -21,8 +21,8 @@ const rotas = [
         element: <Logout />
     },
     {
-        path: '/perfil',
-        element: <Perfil />
+        path: '/cadastro',
+        element: <Cadastro />
     }
 ];
 

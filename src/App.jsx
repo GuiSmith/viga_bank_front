@@ -25,7 +25,7 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const { isAuthenticated, isLoading, contextAuthType } = useAuth();
-  const permittedPaths = ['/perfil'];
+  const permittedPaths = ['/cadastro'];
 
   useEffect(() => {
     if (isLoading) return;
@@ -39,15 +39,17 @@ function App() {
       <section className='app-container'>
         <BarraDeNavegacao />
         <div className='page-wrapper min-vh-100 d-flex align-items-top justify-content-center'>
-          <Routes>
-            {rotas.map(({ path, element }, index) => (
-              <Route key={index} path={path} element={element} />
-            ))}
-            <Route key={'inexistente'} path='*' element={<PaginaInexistente />} />
-          </Routes>
-          <ToastContainer position="bottom-right" />
+          <article className="card border-0 shadow-sm" style={{ width: "500px", padding: "2rem" }}>
+            <Routes>
+              {rotas.map(({ path, element }, index) => (
+                <Route key={index} path={path} element={element} />
+              ))}
+              <Route key={'inexistente'} path='*' element={<PaginaInexistente />} />
+            </Routes>
+            <ToastContainer position="bottom-right" />
+          </article>
         </div>
-      </section>
+      </section >
     </>
   )
 }

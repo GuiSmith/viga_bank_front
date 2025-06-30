@@ -43,12 +43,74 @@ const auth = async () => {
     const response = await fetch(completeUrl, apiOptions('GET'));
     const responseCode = response.status;
 
-    if(responseCode == 200){
+    if (responseCode == 200) {
         return true;
-    }else{
+    } else {
         return false;
     }
 };
+
+const selecionarBeneficiario = async () => {
+    try {
+        const completeUrl = `${apiUrl}/beneficiarios`;
+        const encodedUrl = encodeURI(completeUrl);
+
+        const response = await fetch(encodedUrl, apiOptions('GET'));
+        const data = await response.json();
+
+        if (response.status == 200) {
+            return {
+                ok: true,
+                error: false,
+                data,
+                mensagem: ``,
+            };
+        }
+
+        if (response.status == 404) {
+            return {
+                ok: false,
+                error: false,
+                data: {},
+                mensagem: `Beneficiário não encontrado`,
+            };
+        }
+
+        if (response.status === 500) {
+            return {
+                ok: false,
+                error: true,
+                data: {},
+                mensagem: ''
+            };
+        }
+
+        if (response.status === 401) {
+            return {
+                ok: false,
+                error: false,
+                data: {},
+                mensagem: 'Não autenticado'
+            };
+        }
+
+        return {
+            ok: false,
+            error: false,
+            data: {},
+            mensagem: data.mensagem
+        };
+
+    } catch (error) {
+        console.error(error);
+        return {
+            ok: false,
+            error: true,
+            data: {},
+            mensagem: data.mensagem
+        };
+    }
+}
 
 const selecionar = async (tabela, id) => {
 
@@ -76,7 +138,7 @@ const selecionar = async (tabela, id) => {
             };
         }
 
-        if(response.status === 500){
+        if (response.status === 500) {
             return {
                 ok: false,
                 error: true,
@@ -91,7 +153,7 @@ const selecionar = async (tabela, id) => {
             data: {},
             mensagem: data.mensagem
         };
-        
+
     } catch (error) {
         console.error(error);
         return {
@@ -129,7 +191,7 @@ const listar = async (tabela) => {
             };
         }
 
-        if(response.status == 500){
+        if (response.status == 500) {
             return {
                 ok: false,
                 error: true,
@@ -153,14 +215,14 @@ const deletar = async (tabela, id) => {
 
         const response = await fetch(`${apiUrl}/${tabela}/${id}`, apiOptions('DELETE'));
 
-        if(response.status === 404){
+        if (response.status === 404) {
             return {
                 ok: false,
                 error: false,
                 mensagem: 'Registro não encontrado'
             };
         }
-        
+
         const data = await response.json();
 
         if (response.status === 200) {
@@ -195,4 +257,4 @@ const deletar = async (tabela, id) => {
     }
 }
 
-export default { apiUrl, getToken, setToken, apiOptions, auth, selecionar, listar, deletar };
+export default { apiUrl, getToken, setToken, apiOptions, auth, selecionar, listar, deletar, selecionarBeneficiario };

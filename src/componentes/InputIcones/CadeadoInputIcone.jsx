@@ -1,4 +1,4 @@
-const CadeadoIcone = () => (
+const CadeadoInputIcone = () => (
     <div className="position-absolute top-50 start-0 translate-middle-y ms-3">
         <svg
             width="16"
@@ -16,4 +16,4 @@ const CadeadoIcone = () => (
     </div>
 );
 
-export default CadeadoIcone;
+export default CadeadoInputIcone;
