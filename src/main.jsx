@@ -10,7 +10,7 @@ import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Router>
+    <Router basename='/viga_bank_front'>
       <AuthProvider>
         <App />
       </AuthProvider>

@@ -43,7 +43,7 @@ const auth = async () => {
     const response = await fetch(completeUrl, apiOptions('GET'));
     const responseCode = response.status;
 
-    if(responseCode == 204){
+    if(responseCode == 200){
         return true;
     }else{
         return false;

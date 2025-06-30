@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
 
   // Funções simples para ATUALIZAR o estado do contexto
   // As chamadas à API são feitas nas páginas de Login/Logout
-  const handleLoginSuccess = ({ token, newAuthType }) => {
+  const handleLoginSuccess = ({ token }) => {
     setIsAuthenticated(true);
     API.setToken(token);
   };
