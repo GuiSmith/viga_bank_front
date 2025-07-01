@@ -2,7 +2,9 @@ import Cookies from 'js-cookie';
 
 const ip = window.location.hostname;
 
-const apiUrl = `http://${ip}:5000`;
+//const apiUrl = `http://${ip}:5000`;
+const apiUrl = `https://viga-bank.onrender.com`;
+
 
 const setToken = (tokenString) => Cookies.set('token', tokenString);
 
