@@ -12,9 +12,11 @@ import ArrowRightIcone from '@componentes/ArrowRIghtIcone';
 import EmailIcone from '@componentes/InputIcones/EmailIcone';
 import CartaoIcone from '@componentes/CartaoIcone';
 import PredioIcone from '@componentes/PredioIcone';
+
 // Componentes | Outros
 import Titulo from '@componentes/Titulo';
 import Label from '@componentes/Label';
+import Loading from '@componentes/Loading';
 
 //Serviços
 import API from '@servicos/API';
@@ -24,6 +26,7 @@ const Cadastro = () => {
     const { register, handleSubmit, watch } = useForm();
     const [etapa, setEtapa] = useState(1);
     const navigate = useNavigate();
+    const [isLoading, setIsloading] = useState(false);
 
     const Etapa1 = () => (
         <>
@@ -231,8 +234,10 @@ const Cadastro = () => {
 
             console.log(completeUrl);
 
+            setIsloading(true);
             const response = await fetch(completeUrl, options);
             const responseData = await response.json();
+            setIsloading(false);
 
             if(response.status == 201){
                 toast.success('Cadastro realizado com sucesso!');
@@ -305,6 +310,7 @@ const Cadastro = () => {
                     }
                 </button>
             </div>
+            {isLoading ? <Loading /> : ''}
         </>
     )
 };
