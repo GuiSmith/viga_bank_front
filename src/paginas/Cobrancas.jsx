@@ -91,7 +91,7 @@ const Cobrancas = ({ prospTipoCobranca = null, titulo = null }) => {
         }
 
         return (
-            <div className='table-container mt-3'>
+            <div className='table-container table-responsive mt-3'>
                 <table className='table table-bordered table-hover table-stripped align-middle'>
                     <thead className='table-dark'>
                         <tr>
