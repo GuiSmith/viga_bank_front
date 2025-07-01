@@ -25,14 +25,7 @@ const apiOptions = (apiMethod, apiBody = {}) => {
     }
 
     if (!['GET', 'DELETE'].includes(apiMethod)) {
-        const strippedApiBody = Object.fromEntries(
-            Object.entries(apiBody).filter(([key, value]) => value !== null)
-        );
-        if (Object.keys(strippedApiBody).length == 0) {
-            return null;
-        } else {
-            obj.body = JSON.stringify(strippedApiBody);
-        }
+        obj.body = JSON.stringify(apiBody);
     }
 
     return obj;

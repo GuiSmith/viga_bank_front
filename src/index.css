@@ -36,6 +36,10 @@ body {
 }
 
 .table tbody tr {
-  cursor: pointer;
+  /* cursor: pointer; */
   user-select: none;
+}
+
+.table-responsive td, .table-responsive th {
+  text-align: center;
 }

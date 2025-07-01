@@ -2,9 +2,9 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
-// Componentes
-// Ícones
+// Componentes | Ícones
 import IconeContainer from '@componentes/IconeContainer';
 import PerfilIcone from "@componentes/PerfilIcone";
 import ArrowLeftIcone from '@componentes/ArrowLeftIcone';
@@ -12,15 +12,18 @@ import ArrowRightIcone from '@componentes/ArrowRIghtIcone';
 import EmailIcone from '@componentes/InputIcones/EmailIcone';
 import CartaoIcone from '@componentes/CartaoIcone';
 import PredioIcone from '@componentes/PredioIcone';
-
-// Outros
+// Componentes | Outros
 import Titulo from '@componentes/Titulo';
 import Label from '@componentes/Label';
+
+//Serviços
+import API from '@servicos/API';
 
 const Cadastro = () => {
 
     const { register, handleSubmit, watch } = useForm();
     const [etapa, setEtapa] = useState(1);
+    const navigate = useNavigate();
 
     const Etapa1 = () => (
         <>
@@ -131,11 +134,11 @@ const Cadastro = () => {
         </>
     );
 
-
     const Etapa3 = () => (
         <>
             <p className='fw-semibold'><span role="img" aria-label="senha">🔒</span> Definir Senha</p>
 
+            {/* Senha */}
             <div className="mb-3">
                 <Label htmlFor="senha">Senha <span className='text-danger'>*</span></Label>
                 <div className="input-group position-relative">
@@ -159,33 +162,6 @@ const Cadastro = () => {
                         onClick={() => {
                             const inputSenha = document.getElementById("senha");
                             inputSenha.type = inputSenha.type === "password" ? "text" : "password";
-                        }}
-                        aria-label="Mostrar senha"
-                    >
-                        👁️
-                    </div>
-                </div>
-            </div>
-
-            <div className="mb-3">
-                <Label htmlFor="confirmarSenha">Confirmar Senha <span className='text-danger'>*</span></Label>
-                <div className="input-group position-relative">
-                    <input
-                        id="confirmarSenha"
-                        type="password"
-                        className="form-control"
-                        placeholder="Digite a senha novamente"
-                        {...register("confirmarSenha", {
-                            required: "Confirmação de senha é obrigatória",
-                            validate: (value) => value === watch("senha") || "As senhas não coincidem"
-                        })}
-                    />
-                    <div
-                        type="button"
-                        className="position-absolute top-50 end-0 translate-middle-y me-2"
-                        onClick={() => {
-                            const inputConfirm = document.getElementById("confirmarSenha");
-                            inputConfirm.type = inputConfirm.type === "password" ? "text" : "password";
                         }}
                         aria-label="Mostrar senha"
                     >
@@ -232,7 +208,52 @@ const Cadastro = () => {
 
     const onSubmit = async (data) => {
         try {
-            console.log(data);
+            // Filtrando só dados necessários
+            const dadosObrigatorios = ["razao", "fantasia", "cpf_cnpj", "email", "codigo_banco", "agencia", "numero_conta", "convenio", "senha"];
+
+            const dados = Object.fromEntries(Object.entries(data).filter(([chave, valor]) => dadosObrigatorios.includes(chave)));
+
+            // Extraindo nome e código do banco
+            const banco = dados.codigo_banco.split(',');
+            dados.codigo_banco = banco[0];
+            dados.nome_banco = banco[1];
+
+            // Mapa de campos
+            const camposUnicos = {
+                cpf_cnpj: 'CPF/CNPJ',
+                email: 'E-mail',
+            };
+
+            // Requisição
+            const endpoint = 'beneficiarios';
+            const completeUrl = `${API.apiUrl}/${endpoint}`;
+            const options = API.apiOptions('POST',dados);
+
+            console.log(completeUrl);
+
+            const response = await fetch(completeUrl, options);
+            const responseData = await response.json();
+
+            if(response.status == 201){
+                toast.success('Cadastro realizado com sucesso!');
+                setTimeout(() => {
+                    navigate('/login');
+                }, 500);
+                return;
+            }
+
+            if(response.status == 500){
+                toast.error('Erro ao cadastrar, contate o suporte');
+                return;
+            }
+
+            if(responseData.detalhes.hasOwnProperty('campo_duplicado')){
+                toast.warning(`${camposUnicos[responseData.detalhes.campo_duplicado]} já cadastrado, use outro!`);
+                return;
+            }
+
+            toast.warning(responseData.mensagem || 'Erro ao cadastrar, contate o suporte');
+
         } catch (error) {
             console.error('Erro ao cadastrar beneficiário', error);
             toast.error('Erro desconhecido, contate o suporte!');
