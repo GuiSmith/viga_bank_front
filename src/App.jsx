@@ -38,8 +38,8 @@ function App() {
     <>
       <section className='app-container'>
         <BarraDeNavegacao />
-        <div className='page-wrapper min-vh-100 d-flex align-items-top justify-content-center'>
-          <article className="card border-0 shadow-sm" style={{ width: "500px", padding: "2rem" }}>
+        <div className='page-wrapper d-flex align-items-top justify-content-center'>
+          <article className="card border-0 shadow-sm" style={{ padding: "2rem" }}>
             <Routes>
               {rotas.map(({ path, element }, index) => (
                 <Route key={index} path={path} element={element} />
