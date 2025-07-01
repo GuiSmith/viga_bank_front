@@ -4,9 +4,12 @@ import Logout from '@paginas/beneficiario/Logout';
 import Cadastro from '@paginas/beneficiario/Cadastro';
 import TokensLista from '@paginas/tokens/tokensLista';
 
+
 // Cobranças
 import Cobrancas from '@paginas/Cobrancas';
-
+import CobrancasBoleto from '@paginas/CobrancasBoleto';
+import CobrancasCartao from '@paginas/CobrancasCartao';
+import CobrancasPix from '@paginas/CobrancasPix';
 
 const rotas = [
     {
@@ -28,6 +31,18 @@ const rotas = [
     {
         path: '/tokens',
         element: <TokensLista />
+    },
+    {
+        path: '/boletos',
+        element: <CobrancasBoleto />
+    },
+    {
+        path: '/cartoes',
+        element: <CobrancasCartao />
+    },
+    {
+        path: '/pix',
+        element: <CobrancasPix />
     }
 ];
 

@@ -2,6 +2,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
+import { useState } from 'react';
 
 // Contextos
 import { useAuth } from '@contextos/AuthContexto';
@@ -16,12 +17,14 @@ import IconeContainer from '@componentes/IconeContainer';
 import CadeadoIcone from '@componentes/CadeadoIcone';
 import Label from '@componentes/Label';
 import Titulo from '@componentes/Titulo';
+import Loading from '@componentes/Loading';
 
 const Login = () => {
 
     const { register, handleSubmit } = useForm();
     const navigate = useNavigate();
     const { handleLoginSuccess } = useAuth();
+    const [isLoading, setIsLoading] = useState(false);
 
     const onSubmit = async (data) => {
 
@@ -30,8 +33,10 @@ const Login = () => {
             const endpoint = `beneficiarios/login`;
             const completeUrl = `${API.apiUrl}/${endpoint}`;
 
+            setIsLoading(true);
             const response = await fetch(completeUrl, API.apiOptions('POST', data));
             const responseData = await response.json();
+            setIsLoading(false);
 
             if (response.status == 200) {
 
@@ -60,6 +65,7 @@ const Login = () => {
                 </IconeContainer>
 
                 <Titulo texto = 'Entrar' />
+                {isLoading ? <Loading /> : ''}
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)}>

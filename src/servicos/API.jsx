@@ -194,6 +194,22 @@ const listar = async (tabela) => {
                 mensagem: response.mensagem
             };
         }
+
+        if(response.status == 401){
+            return {
+            ok: false,
+            error: false,
+            array: [],
+            mensagem: 'Faça login para continuar!',
+        };
+        }
+
+        return {
+            ok: false,
+            error: false,
+            array: [],
+            mensagem: data.mensagem,
+        };
     } catch (error) {
         console.error(error);
         return {

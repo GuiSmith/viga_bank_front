@@ -14,13 +14,13 @@ import IconeContainer from '@componentes/IconeContainer';
 import Loading from '@componentes/Loading';
 import CobrancasIcone from '@componentes/CobrancasIcone';
 
-const Cobrancas = () => {
+const Cobrancas = ({ prospTipoCobranca = null, titulo = null }) => {
 
     const [cobrancas, setCobrancas] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
     const [cobrancasFiltradas, setCobrancasFiltradas] = useState([]);
-    const [tipoCobranca, setTipoCobranca] = useState(null);
+    const [tipoCobranca, setTipoCobranca] = useState(prospTipoCobranca);
 
     const endpoint = 'views/cobrancas';
 
@@ -54,12 +54,13 @@ const Cobrancas = () => {
 
     // Filtrando cobranças
     useEffect(() => {
+        if (isLoading) return;
         if (tipoCobranca == null) {
             setCobrancasFiltradas(cobrancas);
         } else {
             setCobrancasFiltradas(cobrancas.filter(cobranca => cobranca.tipo_cobranca == tipoCobranca));
         }
-    }, [tipoCobranca]);
+    }, [tipoCobranca, cobrancas]);
 
     const tabela = () => {
 
@@ -78,7 +79,7 @@ const Cobrancas = () => {
                 return `R$ ${Number(value).toFixed(2).replace('.', ',')}`;
             }
 
-            if (['id_integracao','nosso_numero'].includes(key)) {
+            if (['id_integracao', 'nosso_numero'].includes(key)) {
                 return utils.etc(value, 12);
             }
 
@@ -90,7 +91,7 @@ const Cobrancas = () => {
         }
 
         return (
-            <div className='table-container'>
+            <div className='table-container mt-3'>
                 <table className='table table-bordered table-hover table-stripped align-middle'>
                     <thead className='table-dark'>
                         <tr>
@@ -117,26 +118,30 @@ const Cobrancas = () => {
                 <IconeContainer>
                     <CobrancasIcone />
                 </IconeContainer>
-                
-                <Titulo texto='Cobranças' />
-                <p className='tex-muted'>Filtre clicando em um botão</p>
+
+                <Titulo texto={titulo ?? 'Cobranças'} />
 
                 {/* Botões */}
-                <div className='d-flex flex-wrap justify-content-center gap-2 mb-3'>
-                    {/* {['Boleto','Pix','Cartão'].map(tipo)} */}
-                    {[...new Set((cobrancas || []).map(c => c.tipo_cobranca))].map(tipo => (
-                        <button
-                            key={tipo}
-                            className={`btn ${(tipoCobranca === null || tipoCobranca === tipo)
-                                ? 'btn-dark'
-                                : 'btn-secondary'
-                                }`}
-                            onClick={() => setTipoCobranca(tipoCobranca == tipo ? null : tipo)}
-                        >
-                            {tipo}
-                        </button>
-                    ))}
-                </div>
+                {prospTipoCobranca !== null ? '' : (
+                    <>
+                        <p className='tex-muted'>Filtre clicando em um botão</p>
+                        <div className='d-flex flex-wrap justify-content-center gap-2 mb-3'>
+                            {/* {['Boleto','Pix','Cartão'].map(tipo)} */}
+                            {[...new Set((cobrancas || []).map(c => c.tipo_cobranca))].map(tipo => (
+                                <button
+                                    key={tipo}
+                                    className={`btn ${(tipoCobranca === null || tipoCobranca === tipo)
+                                        ? 'btn-dark'
+                                        : 'btn-secondary'
+                                        }`}
+                                    onClick={() => setTipoCobranca(tipoCobranca == tipo ? null : tipo)}
+                                >
+                                    {tipo}
+                                </button>
+                            ))}
+                        </div>
+                    </>
+                )}
             </div>
             {isLoading ? <Loading /> : tabela()}
         </article>

@@ -21,24 +21,14 @@ const BarraDeNavegacao = () => {
         },
         {
             auth: true,
-            to: '/credito',
-            text: 'Crédito'
-        },
-        {
-            auth: true,
-            to: '/debito',
-            text: 'Débito'
+            to: '/cartoes',
+            text: 'Cartão'
         },
         {
             auth: true,
             to: '/boletos',
             text: 'Boletos'
         },
-        {
-            auth: true,
-            to: '/logs',
-            text: 'Logs'
-        }
     ];
 
     return (
