@@ -10,6 +10,7 @@ import utils from '@utils/formatadores';
 import Titulo from '@componentes/Titulo';
 import IconeContainer from '@componentes/IconeContainer';
 import ChaveIcone from '@componentes/ChaveIcone';
+import Loading from '@componentes/Loading';
 
 const TokensLista = () => {
     const [tokens, setTokens] = useState([]);
@@ -95,7 +96,7 @@ const TokensLista = () => {
                 <small className='text-secondary text-muted'>São usados para acessar a API do sistema</small>
             </div>
             {loading ? (
-                <p>Carregando...</p>
+                <Loading className='text-center' />
             ) : (
                 <>
                     <div className='d-flex flex-wrap gap-2 justify-content-start mb-3'>
@@ -107,25 +108,29 @@ const TokensLista = () => {
                         <table className="table table-bordered table-hover table-striped table-dark align-middle">
                             <thead className="table-dark">
                                 <tr>
+                                    <th scope="col">ID</th>
                                     <th scope="col">Token</th>
                                     <th scope="col">Ativo</th>
+                                    <th scope='col'>Criado em</th>
                                     <th scope='col' colSpan={2}>Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {tokens.map(token => (
                                     <tr key={token.id} >
-                                        <td> {utils.etc(token.token,8)}</td>
-                                        <td>
-                                            <span className={`badge ${token.ativo ? 'bg-success' : 'bg-danger'}`}>{utils.boolToText(token.ativo)}</span>
-                                        </td>
-                                        <td>
-                                            <span className={`badge bg-primary ${token.ativo ? '' : 'opacity-50'}`} style={{cursor: 'pointer'}}>Copiar</span>
-                                        </td>
+                                        {/* ID */}
+                                        <td>{token.id}</td>
+                                        {/* Token */}
+                                        <td> {utils.etc(token.token,16)}</td>
+                                        {/* Ativo */}
+                                        <td><span className={`badge ${token.ativo ? 'bg-success' : 'bg-danger'}`}>{utils.boolToText(token.ativo)}</span></td>
+                                        <td>{utils.formatData(token.data_cadastro,true)}</td>
+                                        {/* Ações */}
+                                        <td><span className={`badge bg-primary ${token.ativo ? '' : 'opacity-50'}`} style={{cursor: 'pointer'}}>Copiar</span></td>
                                         <td>
                                             <span
                                                 className={`badge bg-danger ${token.ativo ? '' : 'opacity-50'}`}
-                                                onClick={token.ativo ? () => inativarToken(token.id) : ''}
+                                                onClick={token.ativo ? () => inativarToken(token.id) : () => console.log()}
                                                 style={{cursor: token.ativo ? 'pointer' : 'default'}}
                                             >
                                                 Inativar
