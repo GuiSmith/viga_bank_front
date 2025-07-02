@@ -42,4 +42,5 @@ body {
 
 .table-responsive td, .table-responsive th {
   text-align: center;
+  white-space: nowrap;
 }
