@@ -14,7 +14,7 @@ import CobrancasPix from '@paginas/CobrancasPix';
 const rotas = [
     {
         path: '/',
-        element: <Cobrancas />,
+        element: <Login />,
     },
     {
         path: '/login',
@@ -43,6 +43,10 @@ const rotas = [
     {
         path: '/pix',
         element: <CobrancasPix />
+    },
+    {
+        path: '/cobrancas',
+        element: <Cobrancas />
     }
 ];
 

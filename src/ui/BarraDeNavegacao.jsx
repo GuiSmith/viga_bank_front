@@ -11,6 +11,11 @@ const BarraDeNavegacao = () => {
     const links = [
         {
             auth: true,
+            to: '/cobrancas',
+            text: 'Cobranças',
+        },
+        {
+            auth: true,
             to: '/tokens',
             text: 'Tokens'
         },

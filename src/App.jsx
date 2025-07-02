@@ -5,9 +5,6 @@ import { useEffect } from 'react';
 // Contextos
 import { useAuth } from '@contextos/AuthContexto';
 
-// Serviços
-import API from '@servicos/API';
-
 // Estilos
 import './App.css';
 import './index.css';
@@ -24,14 +21,21 @@ function App() {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const { isAuthenticated, isLoading, contextAuthType } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
   const permittedPaths = ['/cadastro'];
 
   useEffect(() => {
     if (isLoading) return;
 
-    if (!permittedPaths.includes(location.pathname) && !isAuthenticated) navigate('/login');
-
+    if (isAuthenticated) {
+      if (location.pathname = '/login') {
+        navigate('/tokens');
+      }
+    } else {
+      if (!permittedPaths.includes(location.pathname)) {
+        navigate('/login')
+      }
+    }
   }, [isLoading, isAuthenticated, location.pathname]);
 
   return (
